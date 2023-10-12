@@ -1,3 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: squash;
+    font-weight: 500;
+    src: url(font/JustSquash.woff) format("woff");
+  }
+  @font-face {
+    font-family: composition;
+    src: url(font/Composition.woff2) format("woff2");
+  }
+}
+
 .App {
   text-align: center;
 }
