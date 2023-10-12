@@ -5,18 +5,51 @@ import "./App.css";
 const scenarios = [
   {
     "scenarioId": 1,
-    "url": "1A_AzCsEqAk",
-    "description": "Votre patron fait des avances sexuelles à votre collègue de travail. Celle-ci semble gênée par la situation. Que faites-vous ?"
+    "url": "ANRz0_oOzK8",
+    "description": "Paul touche la joue à Sandrine et semble s'inquiéter de son aspect physique qui semble anormal. Que faites-vous ?",
+    "yes": 3,
+    "scared": 2,
+    "no": 20,
   },
   {
     "scenarioId": 2,
-    "url": "2B_BzDsFqBl",
-    "description": "Vous êtes témoin d'un accident de la route. Les conducteurs sont blessés, mais vous êtes en retard pour une réunion importante. Que faites-vous ?"
+    "url": "fMk9IpX_Fcs",
+    "description": "Votre patron fait du chantage à connotation sexuelle à sa secrétaire en échange d'une augmentation. Que faites-vous ?",
+    "yes": 15,
+    "scared": 10,
+    "no": 0,
   },
   {
     "scenarioId": 3,
-    "url": "3C_CzEsGrHqDm",
-    "description": "Vous trouvez un portefeuille contenant de l'argent et des cartes d'identité. Il n'y a pas de coordonnées pour le propriétaire. Que faites-vous ?"
+    "url": "sMuuqmMMjwk",
+    "description": "Paul complimente le haut de Mélanie et lui recommande de le porter plus souvent. Que faites-vous ?"
+    ,"yes": 8,
+    "scared": 2,
+    "no": 15,
+  },
+  {
+    "scenarioId": 4,
+    "url": "HqJH3ewNEvw",
+    "description": "Jean regarde de manière intéressée les fesses de Nathalie lorsque celle-ci passe devant lui. Que faites-vous ?"
+    ,"yes": 4,
+    "scared": 3,
+    "no": 17,
+  },
+  {
+    "scenarioId": 5,
+    "url": "hqc9k5ATcKE",
+    "description": "Lucie complimente les cheveux de Steve tout en les touchant. Que faites-vous ?"
+    ,"yes": 2,
+    "scared": 0,
+    "no": 23,
+  },
+  {
+    "scenarioId": 6,
+    "url": "qa9JfzCKc_4",
+    "description": "Jean parle à la nouvelle stagiaire tout en la prenant par la taille. Que faites-vous ?"
+    ,"yes": 17,
+    "scared": 6,
+    "no": 2,
   }
 ];
 
@@ -25,13 +58,20 @@ function App() {
   const [responseGiven, setResponseGiven] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const scenario = scenarios[currentScenarioIndex];
+  const yesPercentage = (scenario.yes / (scenario.yes + scenario.scared + scenario.no)) * 100;
+  const scaredPercentage = (scenario.scared / (scenario.yes + scenario.scared + scenario.no)) * 100;
+  const noPercentage = (scenario.no / (scenario.yes + scenario.scared + scenario.no)) * 100;
+  const totalVotes = scenario.yes + scenario.scared + scenario.no;
+
 
   const handleNextScenario = () => {
     if (responseGiven) {
-      if (currentScenarioIndex < scenarios.length){
+      if (currentScenarioIndex+1 < scenarios.length){
+        console.log("next scenario")
         setCurrentScenarioIndex(currentScenarioIndex + 1);
-        setResponseGiven(false);
+        return setResponseGiven(false);
       }
+      console.log("end of game")
     }
   };
 
@@ -49,7 +89,7 @@ function App() {
         <div className="text-center">
           <h1 className="text-5xl font-squash m-5">#BalanceTonQuoi</h1>
           <h2>Vous allez être confronté à des potentiels scénarios d'harcèlement sexuel dans le monde du travail, 3 choix vous seront proposés : "J'interviens", "J'ai peur d'intervenir" ou "Tout est normal". </h2>
-          <h2>Répondez honnêtement les choix sont anonymes et nous collectons les statistiques pour évaluer la prise des risques des gens afin de les sensibiliser.</h2>
+          <h2>Répondez honnêtement les choix sont anonymes et nous collectons les statistiques pour évaluer la prise de risques des gens afin de les sensibiliser.</h2>
           <h2>Lorsque vous aurez soumis votre réponse les statistiques des autres joueurs seront affichés.</h2>
           <button className="box-border border-2 border-black m-5 rounded cursor-pointer font-squash bg-white text-black text-3xl px-6 py-4 hover:bg-black hover:text-white m-3" onClick={startGame}>
             Suivant
@@ -92,7 +132,7 @@ function App() {
               <div class="cursor-pointer text-black box-border font-composition text-xl">
               </div>
               <div class="cursor-pointer text-black box-border font-composition text-2xl">
-                66% des gens seraient intervenus, 23% auraient eu peur d'intervenir et 11% pensent que la situation est normale (13 votes)
+              {yesPercentage.toFixed(0)}% des gens seraient intervenus, {scaredPercentage.toFixed(0)}% auraient eu peur d'intervenir et {noPercentage.toFixed(0)}% pensent que la situation est normale ({totalVotes} votes)
               </div>
               <button onClick={handleNextScenario} className="cursor-pointer bg-black text-2xl text-white font-composition px-6 py-4 rounded hover:bg-white hover:text-black border border-black">Suivant</button>
             </div>
